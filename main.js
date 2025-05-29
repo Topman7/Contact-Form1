@@ -16,31 +16,32 @@ let errQueryType = document.querySelector(".error-qt");
 let errMessage = document.querySelector(".error-msg");
 let errConsent = document.querySelector(".error-checkbox");
 
-// Grap success toaster
-let successToaster = document.querySelector(".success");
+// Grap Success toaster
+let SuccessToaster = document.querySelector(".success");
 
-//  show  /hide the toaster
-let toggleToaste = (show) => {
+// Show /hide the toaster
+let toggletoaster = (show) => {
   if (show) {
-    successToaster.classList.remove("hidden");
+    SuccessToaster.classList.remove("hidden");
     setTimeout(() => {
-      successToaster.classList.add("hidden");
-    }, 3000);
+      SuccessToaster.classList.add("hidden")
+    },3000 );
   } else {
-    successToaster.classList.add("hidden");
+    SuccessToaster.classList.add("hidden");
   }
 };
 
 // Helper to show/hide error span
-let showError = (errMsg, see, inpuBorder) => {
+let showError = (errMsg, see, inputBorder) => {
   if (see) {
     errMsg.classList.remove("hidden");
-    // st red border in error state
-    inputBorder.style.borderColor = "vae(--Red)";
+    //set red border in error state
+    inputBorder.style.borderColor = "var(--Red)";
   } else {
     errMsg.classList.add("hidden");
-    // rest to default border
-  }
+    // reset to default border without any error state
+    inputBorder.style.borderColor = "var(--Grey-500-medium)";
+  };
 };
 
 // Add change listener to radio for background highlight
@@ -54,9 +55,8 @@ queryTypeInput.forEach((eachRadio) => {
         wrapper.style.backgroundColor = "";
       }
     });
-
-    // hide error once a chice is made
-    errQueryType.classList.add("hidden");
+    // hide error once a choice is made
+    errQueryType.classList.add("hidden"); 
   });
 });
 
@@ -68,26 +68,26 @@ form.addEventListener("submit", (event) => {
 
   // Validating FisrtName
   if (firstNameInput.value === "") {
-    showError(errFirstName, true, firstBame);
+    showError(errFirstName, true, firstNameInput);
     isValid = false;
   } else {
-    showError(errFirstName, false, firstName);
+    showError(errFirstName, false, firstNameInput);
   }
 
   // Validating LastName
   if (lastNameInput.value === "") {
-    showError(errLastName, true, lastName);
+    showError(errLastName, true, lastNameInput);
     isValid = false;
   } else {
-    showError(errLastName, false, lastName);
+    showError(errLastName, false, lastNameInput);
   }
 
   // Validating Email
   if (emailInput.value === "") {
-    showError(errEmail, true, email);
+    showError(errEmail, true, emailInput);
     isValid = false;
   } else {
-    showError(errEmail, false, email);
+    showError(errEmail, false, emailInput);
   }
 
   // Grap the radio input that as been checked
@@ -98,12 +98,11 @@ form.addEventListener("submit", (event) => {
 
   //   Show or hide the error message
   // if (!queryTypeValue) {
-  // showError(errQueryType, true);
-  //  isValid = false;
+    // showError(errQueryType, true);
+    // isValid = false;
   // } else {
-  // showError(errQueryType, false);
-
-  //  }
+    // showError(errQueryType, false);
+  // }
 
   let checkedRadio = document.querySelector("input.query:checked");
   if (!checkedRadio) {
@@ -113,7 +112,7 @@ form.addEventListener("submit", (event) => {
 
   // Validate Message
   if (messageInput.value === "") {
-    showError(errMessage, true, messagInpute);
+    showError(errMessage, true, messageInput);
     isValid = false;
   } else {
     showError(errMessage, false, messageInput);
@@ -133,19 +132,19 @@ form.addEventListener("submit", (event) => {
       firstName: firstNameInput.value,
       lastName: lastNameInput.value,
       email: emailInput.value,
-      queryType: queryTypeValue,
+      queryType: checkedRadio.value,
       message: messageInput.value,
       consent: consentInput.checked,
     };
 
     console.log("Form Submission", formData);
 
-    toggleToaste(true);
+    toggletoaster(true);
 
     form.reset();
 
     queryTypeInput.forEach((eachRadio) => {
       eachRadio.parentElement.style.backgroundColor = "";
     });
-  }
+  };
 });
